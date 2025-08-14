@@ -123,7 +123,7 @@ The **Airbnb Clone Project** is a comprehensive, real-world application designed
 
 ---
 
-## 🔒 Key Security Measures
+## 🔒 API Security
 
 1. **Authentication** – Secure login using JWT or sessions with hashed/salted passwords.  
 2. **Authorization** – Role-based permissions to control actions for guests, hosts, and admins.  
