@@ -1,170 +1,156 @@
-# airbnb-clone-project
+# Airbnb Clone Project
 
-The Airbnb Clone Project is a comprehensive, real-world application designed to simulate the development of a robust booking platform like Airbnb. It involves a deep dive into full-stack development, focusing on backend systems, database design, API development, and application security. 
+The **Airbnb Clone Project** is a comprehensive, real-world application designed to simulate the development of a robust booking platform like Airbnb. It involves a deep dive into full-stack development, focusing on backend systems, database design, API development, and application security.
 
-#Team Roles
-Backend Developer: Responsible for implementing API endpoints, database schemas, and business logic.
-Database Administrator: Manages database design, indexing, and optimizations.
-DevOps Engineer: Handles deployment, monitoring, and scaling of the backend services.
-QA Engineer: Ensures the backend functionalities are thoroughly tested and meet quality standards.
+---
 
-#Technology Stack
-Django: A high-level Python web framework used for building the RESTful API.
-Django REST Framework: Provides tools for creating and managing RESTful APIs.
-PostgreSQL: A powerful relational database used for data storage.
-GraphQL: Allows for flexible and efficient querying of data.
-Celery: For handling asynchronous tasks such as sending notifications or processing payments.
-Redis: Used for caching and session management.
-Docker: Containerization tool for consistent development and deployment environments.
-CI/CD Pipelines: Automated pipelines for testing and deploying code changes.
+## 📌 Team Roles
 
-#Database Design
+- **Backend Developer**: Implements API endpoints, database schemas, and business logic.  
+- **Database Administrator**: Manages database design, indexing, and optimizations.  
+- **DevOps Engineer**: Handles deployment, monitoring, and scaling of backend services.  
+- **QA Engineer**: Tests backend functionalities to ensure they meet quality standards.  
 
-1. Users
-Purpose: Represents guests and hosts. A user can be both.
+---
 
-Important fields:
-id — unique identifier.
-name — display name.
-email — unique, used for login.
-is_host — boolean flag to mark if user can list properties.
-created_at — date the account was created.
+## 🛠 Technology Stack
 
-Relationships:
-One-to-Many with Properties (a host can have many properties, but each property belongs to one host).
-One-to-Many with Bookings (a guest can have many bookings).
-One-to-Many with Reviews (a user can write many reviews).
-One-to-Many with Payments (a guest can make many payments).
+- **Django** – High-level Python web framework for building the RESTful API.  
+- **Django REST Framework (DRF)** – Tools for creating and managing RESTful APIs.  
+- **PostgreSQL** – Powerful relational database for data storage.  
+- **GraphQL** – Flexible and efficient querying of data.  
+- **Celery** – Handles asynchronous tasks such as sending notifications or processing payments.  
+- **Redis** – Caching and session management.  
+- **Docker** – Containerization for consistent development and deployment.  
+- **CI/CD Pipelines** – Automated testing and deployment workflows.  
 
-2. Properties
-Purpose: Represents a place to stay (house, apartment, etc.).
+---
 
-Important fields:
-id — unique identifier.
-host_id — foreign key to Users.
-title — name of the property.
-price_per_night — nightly rate.
-location — city, state, country (or latitude/longitude).
+## 🗄 Database Design
 
-Relationships:
-Many-to-One with Users (host).
-One-to-Many with Bookings (a property can have many bookings).
-One-to-Many with Reviews (a property can have many reviews).
+### **1. Users**
+**Purpose:** Represents guests and hosts. A user can be both.  
+**Fields:**  
+- `id` – Unique identifier  
+- `name` – Display name  
+- `email` – Unique, used for login  
+- `is_host` – Boolean flag (can list properties)  
+- `created_at` – Account creation date  
 
-3. Bookings
-Purpose: Represents a reservation for a property.
+**Relationships:**  
+- One-to-Many → Properties  
+- One-to-Many → Bookings  
+- One-to-Many → Reviews  
+- One-to-Many → Payments  
 
-Important fields:
-id — unique identifier.
-property_id — foreign key to Properties.
-guest_id — foreign key to Users (guest).
-start_date — check-in date.
-end_date — check-out date.
+---
 
-Relationships:
-Many-to-One with Users (guest making the booking).
-Many-to-One with Properties.
-One-to-One or One-to-Many with Payments (one booking may have one payment, or partial/multiple payments).
-One-to-One or One-to-Many with Reviews (typically one review per booking from each party).
+### **2. Properties**
+**Purpose:** Represents a place to stay (house, apartment, etc.).  
+**Fields:**  
+- `id` – Unique identifier  
+- `host_id` – Foreign key to Users  
+- `title` – Property name  
+- `price_per_night` – Nightly rate  
+- `location` – City/state/country or coordinates  
 
-4. Reviews
-Purpose: Feedback and rating for a property or host.
+**Relationships:**  
+- Many-to-One → Users (host)  
+- One-to-Many → Bookings  
+- One-to-Many → Reviews  
 
-Important fields:
-id — unique identifier.
-booking_id — foreign key to Bookings.
-reviewer_id — foreign key to Users.
-rating — numeric score (1–5).
-comment — text feedback.
+---
 
-Relationships:
-Many-to-One with Bookings (a booking can have multiple reviews — e.g., guest reviewing host, host reviewing guest).
-Many-to-One with Users (reviewer).
-Many-to-One with Properties (through booking).
+### **3. Bookings**
+**Purpose:** Represents a reservation for a property.  
+**Fields:**  
+- `id` – Unique identifier  
+- `property_id` – Foreign key to Properties  
+- `guest_id` – Foreign key to Users (guest)  
+- `start_date` – Check-in date  
+- `end_date` – Check-out date  
 
-5. Payments
-Purpose: Tracks transactions for bookings.
+**Relationships:**  
+- Many-to-One → Users (guest)  
+- Many-to-One → Properties  
+- One-to-One / One-to-Many → Payments  
+- One-to-One / One-to-Many → Reviews  
 
-Important fields:
-id — unique identifier.
-booking_id — foreign key to Bookings.
-amount — payment amount.
-status — e.g., pending, paid, refunded.
-payment_method — e.g., card, PayPal, Stripe.
+---
 
-Relationships:
-Many-to-One with Bookings.
-Many-to-One with Users (payer — usually the guest).
-Can be related to Properties indirectly via the booking.
+### **4. Reviews**
+**Purpose:** Feedback and rating for a property or host.  
+**Fields:**  
+- `id` – Unique identifier  
+- `booking_id` – Foreign key to Bookings  
+- `reviewer_id` – Foreign key to Users  
+- `rating` – Numeric score (1–5)  
+- `comment` – Feedback text  
 
-# Features Overview
+**Relationships:**  
+- Many-to-One → Bookings  
+- Many-to-One → Users (reviewer)  
+- Many-to-One → Properties (via booking)  
 
-1. User Management
-Handles guest and host registration, authentication, and profile management. This feature ensures secure login, allows users to update personal details, and controls roles (host vs. guest), enabling tailored access to property listing or booking capabilities.
+---
 
-2. Property Management
-Allows hosts to create, update, and delete property listings with details such as location, price, amenities, and photos. This feature is essential for keeping the platform’s listings accurate and attractive, giving guests the information they need to make booking decisions.
+### **5. Payments**
+**Purpose:** Tracks transactions for bookings.  
+**Fields:**  
+- `id` – Unique identifier  
+- `booking_id` – Foreign key to Bookings  
+- `amount` – Payment amount  
+- `status` – Payment status (pending, paid, refunded)  
+- `payment_method` – Card, PayPal, Stripe  
 
-3. Booking System
-Enables guests to search for available properties, select dates, and make reservations. It ensures that availability is updated in real time, preventing double bookings and streamlining the reservation process for both guests and hosts.
+**Relationships:**  
+- Many-to-One → Bookings  
+- Many-to-One → Users (payer)  
+- Indirect relationship → Properties (via booking)  
 
-4. Reviews & Ratings
-Lets guests and hosts leave feedback about their stay or their experience with the other party. This feature builds trust in the platform by helping future users make informed decisions based on past experiences.
+---
 
-5. Payment Processing
-Facilitates secure online payments for bookings, tracking amounts, statuses, and methods. It ensures a seamless transaction flow between guests and hosts, while providing a record of financial operations for both parties.
+## 🚀 Features Overview
 
-6. Search & Filtering (optional enhancement)
-Allows users to filter properties by location, price range, amenities, and ratings. This feature improves the user experience by helping guests quickly find listings that match their preferences.
+1. **User Management** – Registration, authentication, and profile management for guests and hosts.  
+2. **Property Management** – Create, update, and delete listings with details like price, amenities, and location.  
+3. **Booking System** – Real-time reservation handling with availability updates.  
+4. **Reviews & Ratings** – Feedback system to build trust between guests and hosts.  
+5. **Payment Processing** – Secure transactions, tracking amounts, statuses, and methods.  
+6. **Search & Filtering** *(optional)* – Find properties by location, price range, amenities, and ratings.  
+7. **Database Optimizations** – Indexing and query improvements for performance.  
+8. **API Documentation** – Interactive references for developers integrating with the backend.  
 
-7. Database Optimizations
-Focuses on structuring tables, indexing frequently queried fields, and using efficient query patterns to improve performance. This ensures that features like property search, booking lookups, and review retrieval remain fast even as the number of users and listings grows.
+---
 
-8. API Documentation
-Provides a clear, interactive reference for all API endpoints, parameters, and expected responses. This helps frontend developers (or third-party integrators) understand how to connect to the backend, reducing integration errors and speeding up development.
+## 🔒 Key Security Measures
 
-#Key Security Measures
+1. **Authentication** – Secure login using JWT or sessions with hashed/salted passwords.  
+2. **Authorization** – Role-based permissions to control actions for guests, hosts, and admins.  
+3. **Rate Limiting** – Prevents brute-force attacks and API abuse.  
+4. **Data Encryption** – HTTPS/TLS for data in transit, encryption for sensitive data at rest.  
+5. **Input Validation** – Prevent SQL Injection and XSS attacks.  
+6. **Secure Payment Processing** – Use PCI DSS-compliant third-party gateways (Stripe, PayPal).  
+7. **Logging & Monitoring** – Detect and respond to suspicious activity quickly.  
 
-1. Authentication
-What it is: Verifying the identity of users during login using secure methods such as JWT (JSON Web Tokens) or session-based authentication, with hashed and salted passwords.
-Why it matters: Prevents unauthorized access to user accounts, protecting sensitive information such as personal details, booking history, and payment data.
+---
 
-2. Authorization
-What it is: Controlling what authenticated users can do based on their role (guest, host, admin). For example, only hosts can edit their own property listings, and only the booking owner can cancel a reservation.
-Why it matters: Stops users from performing actions they shouldn’t (e.g., editing another host’s listing), protecting both user content and system integrity.
+## ⚙️ CI/CD Pipeline
 
-3. Rate Limiting
-What it is: Restricting the number of requests a user or IP address can make in a certain time frame.
-Why it matters: Helps prevent brute-force attacks on login endpoints and reduces the risk of API abuse, which can degrade performance or cause downtime.
+**CI/CD Pipelines** are automated workflows that build, test, and deploy the application whenever code changes are pushed.
 
-4. Data Encryption (in transit & at rest)
-What it is: Using HTTPS (TLS/SSL) to encrypt data between client and server, and encrypting sensitive data (e.g., payment details) in the database.
-Why it matters: Protects against eavesdropping and man-in-the-middle attacks, ensuring user data and payment information can’t be intercepted.
+- **Continuous Integration (CI):** Runs tests automatically before merging new code.  
+- **Continuous Deployment (CD):** Pushes tested code to staging or production automatically.  
 
-5. Input Validation & Sanitization
-What it is: Checking and cleaning all user inputs (search queries, forms, etc.) to prevent malicious code injections (SQL Injection, XSS).
-Why it matters: Prevents attackers from manipulating queries or injecting harmful scripts, protecting the database and user sessions.
+**Why it’s important:**  
+Keeps the codebase stable, ensures quick releases, and reduces deployment errors — critical for platforms with real user data and payments.
 
-6. Secure Payment Processing
-What it is: Using trusted third-party payment gateways (e.g., Stripe, PayPal) with PCI DSS compliance and tokenized transactions.
-Why it matters: Keeps sensitive financial data out of your servers and ensures transactions are processed safely, maintaining user trust.
+**Tools:**  
+- GitHub Actions  
+- Docker  
+- Jenkins  
+- GitLab CI/CD  
+- CircleCI  
 
-7. Logging & Monitoring
-What it is: Keeping detailed logs of authentication attempts, admin actions, and suspicious activity, with alerts for anomalies.
-Why it matters: Enables quick detection and response to security breaches, reducing potential damage.
 
-#CI/CD Pipeline
-CI/CD Pipelines (Continuous Integration and Continuous Deployment) are automated workflows that handle building, testing, and deploying your application whenever code changes are pushed.
-
-Continuous Integration (CI): Ensures that new code is automatically tested and merged smoothly with the main codebase, catching bugs early.
-Continuous Deployment (CD): Automates releasing tested code to staging or production environments, reducing manual deployment errors and speeding up feature delivery.
-
-Why it’s important for the Airbnb clone:
-It keeps the project stable by running tests automatically before deployment, ensures new features don’t break existing functionality, and allows quick, reliable releases of updates like new booking features or security fixes. This is critical for a platform handling real user data and payments.
-
-Possible Tools:
-GitHub Actions — integrates directly with your GitHub repository for automated workflows.
-Docker — packages the app into containers for consistent environments across development and production.
-Jenkins — highly customizable automation server for CI/CD.
-GitLab CI/CD — integrated pipelines if you host your code on GitLab.
-CircleCI — cloud-based CI/CD with fast builds and easy config.
+---
