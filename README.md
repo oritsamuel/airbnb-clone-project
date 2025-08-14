@@ -110,7 +110,7 @@ The **Airbnb Clone Project** is a comprehensive, real-world application designed
 
 ---
 
-## 🚀 Features Overview
+## 🚀 Feature Breakdown
 
 1. **User Management** – Registration, authentication, and profile management for guests and hosts.  
 2. **Property Management** – Create, update, and delete listings with details like price, amenities, and location.  
